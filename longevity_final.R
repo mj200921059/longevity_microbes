@@ -1,25 +1,9 @@
 # data analysis for longevity
-  # On DEC 14 2023
+# On DEC 14 2023
 # by Jun
 
-# 
-source('D:/OneDrive - 陕西科技大学/dataanalysis/longevity/packages')
-
-#====================================
-# outline
-
-# basic information about samples 
-
-
-#====================================
-
-
-
 #====================================
 # basic information about samples 
-#set directory 
-setwd("D:/OneDrive - 陕西科技大学/dataanalysis/longevity/data") # laptop
-setwd("C:/Users/NWU_M/Documents/OneDrive - 陕西科技大学/dataanalysis/longevity/data_final") # for desktop
 # merge sample_id.csv and run_id.csv
 s_id <- fread('sample_id.csv')
 r_id <- fread('run_id.csv')
@@ -1012,39 +996,7 @@ dev.off()
 
 
 
-########################
-#
-# beta diveristy  
-#
-########################
 
-
-
-##### beta diveristy  
-
-#（1） Hi Kyle and Martin,
-# 
-# As far as I know, the PERMANOVA and adonis pseudo-F statistics should be identical.
-# 
-# Martin, if you're getting significant p-values for categories that do not seem to affect the clustering, it could be due to differences in dispersion, as Kyle mentioned. You can check this by running PERMDISP, which is also available in compare_categories.py, to see whether the dispersion of your groups of samples is significantly different.
-# 
-# More commonly, what we've seen is that having a large number of samples tends to yield highly significant p-values in these tests (including ANOSIM, PERMANOVA, adonis, MRPP, etc.), even if the effect size is very small. For example, you might run adonis and get an R-squared value of 0.01 (very low), but a p-value that is significant. Thus, it is crucial to interpret both the effect size (R-squared, in this example) as well as the p-value, because the p-value tends to drop to zero as you increase the number of samples in your study; extremely small/weak effects may become significant as the sample size increases. There are a number of discussions about these issues with p-values in papers and online- if you're interested in reading more about this, take a look at http://galitshmueli.com/system/files/Largesample-12-6-2012.pdf, which also has some references to other papers on this subject.
-# 
-# Hope this helps,
-# Jai
-##\
-# （2）数据离散度不同而中心点一致，adonis也可能显著https://blog.csdn.net/qazplm12_3/article/details/120559125
-# 三个群体的物种空间的中心点一致，而物种丰度的离散度依次变小，PERMANOVA检验显著，betadisper结果也显著，这时解释数据需要考虑是不是不同组的数据在空间分布的离散
-# 度显著不同。这是导致adonis结果显著的主要原因。不同分组之间物种的构成的显著不同不是体现在物种空间中心点的变化，而是物种空间离散的变化。也就是说分组内样品的多样性
-#反应到了物种构成差异上了。这种现象在这里可以忽略，因为已经通过alpha diveristy排除了样品内物种多样性的组间差异。
-# （3）You seem to be confusing a lot of things here. PERMANOVA is a multivariate ANOVA with permutation-based testing. 
-# PERMANOVA tests for differences between group centroids --- in other words it compares the multivariate means. 
-# It does assume homogeneity of variances. 
-# To check that any difference between groups in terms of their centroids is not being induced by differences in variances, we might use the multivariate dispersion method implemented in betadisper() in R. 
-# adonis() and betadisper() are doing very different things:
-#   
-#   adonis() gives an analysis like PERMANOVA,
-# betadisper() gives an analysis of multivariate spread.https://stackoverflow.com/questions/35410860/permanova-multivariate-spread-among-groups-is-not-similar-to-variance-homogeneit
 ####################################################################################
 #
 # PCOA analysis for population and age group
