@@ -72,9 +72,9 @@ dev.off()
 prepareDatabase('accessionTaxa.sql') # only need to run once 
 
 
-# obtain microbes profile in each sample
+# obtain microbes profile of each sample
 
-setwd("D:/OneDrive - 陕西科技大学/dataanalysis/longevity/data/kraken")
+setwd("D:/OneDrive/dataanalysis/longevity/data/kraken")
 
 kraken_files <- list.files(full.names = T, recursive = FALSE)
 
@@ -111,8 +111,7 @@ for (x in file_names) {
   taxid <- rbind(taxid,kraken_taxid)
 }
 taxid <- unique(taxid)
-setwd("D:/OneDrive - 陕西科技大学/dataanalysis/longevity/data")
-setwd("C:/Users/NWU_M/Documents/OneDrive - 陕西科技大学/dataanalysis/longevity/data")
+setwd("D:/OneDrive/dataanalysis/longevity/data")
 taxa<-getTaxonomy(taxid$taxonomy_id,'accessionTaxa.sql')
 taxa <- as.data.frame(taxa)
 taxa$taxonomy_id <- as.integer(rownames(taxa))
@@ -213,10 +212,6 @@ PERMANOVA_R2(t(taxa_tpm),batchid,covar,2)
 #-------------------------------------------
 # 2 Correction batch effects
 covar = sra_sampleid[, c('category','gender')]
-
-
-# covar = sra_sampleid[, c('country','category', 'gender')] # location and bioproject_id present the same mean,which lead to error for including location in covar.
-# variant order in covar effect on the result. bathc_ref also effect on the result.
 #-------------------------------
 # 2.1 after corrected assigned counts
 options(warn=-1)
@@ -649,27 +644,7 @@ ggdensity(diversity_shannon_b,x='diversity_shannon_b',color ="country",fill = "c
 dev.off()
 
 
-# #-----------------------------
-# # Richness analysis 
-# 
-# richness_b <- estimateR(t(b_taxa_a))
-# richness_b <- as.data.frame(t(richness_b))
-# richness_b$run_id <- rownames(richness_b)
-# richness_b <- merge(richness_b,sra_sampleid, by="run_id")
-# kruskal.test(S.chao1~country, data = richness_b)
-# 
-# 
-# compaired <- list(c("China","Italy_1"),c("China","Italy_2"),c("China","Japan"),c("Italy_1","Italy_2"),c("Italy_1","Japan"),c("Italy_2","Japan"))
-# pdf(paste("F2.3bacteria", "pdf", sep="."),width=12, height=9)
-# ggboxplot(richness_b,x="country",y="S.chao1",fill = "country",add="jitter",size=0.5)+
-#   #stat_compare_means(comparisons = compaired, method = "wilcox.test")+
-#   stat_compare_means(method = "kruskal.test")+
-#   theme_light()+
-#   scale_fill_manual(values=c("#a6cee3","#C2C2C2","#b2df8a","#d9544d"),label = c("Italy_2","China","Japan","Italy_1"))+
-#   theme(axis.text.y =element_text(size=24,face = "bold",color = "black"),axis.text.x=element_text(size=24,face="bold",color = "black"),axis.title =element_text(size=26,face="bold",color = "black"))+
-#   labs(x = "", y = "")+guides(fill="none")
-# dev.off()
-#-----------------------------
+
 
 # ----------------------------------For Archaea -------------------------------
 load("kraken_taxa_corrected.rda")
