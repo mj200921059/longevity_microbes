@@ -12,7 +12,7 @@ host_fp: '/home/dell/dataanalysis/pipelines/databases/sunbeam/refernce_db/sunbea
 # qc _decom
 
 sunbeam run --configfile ~/dataanalysis/projects/longevit/sunbeam_results/sunbeam_config.yml all_assembly
-
+conda deactivate 
 #========================================================
 # Classification 
 conda activate kraken_pipeline
@@ -33,7 +33,5 @@ do
     -o $bracken_results -l S
 
 done
-
-
 
 conda deactivate 
